@@ -55,10 +55,11 @@ public class Interfaz extends javax.swing.JFrame {
         });
 
         this.listadoPedidos.setCellRenderer(new MiListRenderer());
-        TextPrompt tp = new TextPrompt
+        /*TextPrompt tp = new TextPrompt
             ("Escriba aquí los pedidos", this.textIntroducirPedido);
         tp.changeStyle(Font.ITALIC + Font.BOLD);
-        tp.setForeground(Color.BLUE);
+        tp.setForeground(Color.BLUE);*/
+        this.textIntroducirPedido.setToolTipText(null);
     }
 
     /**
@@ -67,13 +68,9 @@ public class Interfaz extends javax.swing.JFrame {
     private void situarVentana() {
         int altoPantalla
                 = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-        int anchoPantalla
-                = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         Dimension d = this.getPreferredSize();
         int altoPedido = d.height;
-        int anchoPedido = d.width;
         // la instruccion de abajo coloca la pantalla abajo derecha.
-        //this.setLocation(anchoPantalla-anchoPedido, altoPantalla-altoPedido);
         this.setLocation(0, altoPantalla - altoPedido);
     }
 
@@ -138,7 +135,7 @@ public class Interfaz extends javax.swing.JFrame {
             e.printStackTrace();
         }
         actualizarTextoTotales(comprobarCantidadArticulos());
-        
+        this.verPedidosDeTipo(LineaPedido.TIPO_ALIMENTACION);
     }
     
     private String[] comprobarCantidadArticulos(){
@@ -190,7 +187,6 @@ public class Interfaz extends javax.swing.JFrame {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -278,7 +274,6 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listadoPedidos);
 
         comboTipoPedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alimentación", "Droguería", "Todos" }));
-        comboTipoPedido.setSelectedIndex(2);
         comboTipoPedido.setToolTipText("Tipo de pedido");
         comboTipoPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,8 +410,7 @@ public class Interfaz extends javax.swing.JFrame {
      * @param evt el objeto que contiene los datos del evento generado.
      */
     private void textIntroducirPedidoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textIntroducirPedidoFocusGained
-        //this.textIntroducirPedido.selectAll();
-        this.textIntroducirPedido.setText("");
+        this.textIntroducirPedido.selectAll();
     }//GEN-LAST:event_textIntroducirPedidoFocusGained
 
     /**
@@ -426,6 +420,7 @@ public class Interfaz extends javax.swing.JFrame {
      */
     private void textIntroducirPedidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textIntroducirPedidoKeyPressed
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            this.textIntroducirPedido.selectAll();
             this.addArticulo();
         }
     }//GEN-LAST:event_textIntroducirPedidoKeyPressed
@@ -500,12 +495,20 @@ public class Interfaz extends javax.swing.JFrame {
             String textoLinea
                     = this.pedidos.getPedidos().get(i).getTextoPedido();
             int contNumeros = 0;
+            boolean numerosQuitados = false;
             // recorremos el texto que estamos escribiendo y contamos los 
             //numeros que tiene al principio que son los de la cantidad que 
             // queremos pedir del articulo
             for(int j = 0; j < textoPedido.length(); j++){
                 char c = textoPedido.charAt(j);
-                if(c >= '0' && c <= '9') contNumeros++;
+                if(!numerosQuitados){
+                    if(c >= '0' && c <= '9'){
+                        contNumeros++;
+                    }
+                    else{
+                        numerosQuitados = true;
+                    }
+                }
             }
             // le quitamos el numero y el guion al texto de la linea
             String[] textoSinNumero = textoLinea.split("-");
@@ -524,7 +527,7 @@ public class Interfaz extends javax.swing.JFrame {
      * Creamos un nuevo objeto EnviarEMail (un JFrame) y lo hacemos visible.
      */
     private void enviarCorreo() {
-        new EnviarEmail(this.pedidos.getPedidos()).setVisible(true);
+        new EnviarEmail(this.pedidos.getPedidos(), this).setVisible(true);
     }
 
     /**
@@ -573,8 +576,7 @@ public class Interfaz extends javax.swing.JFrame {
                 setListData(this.pedidos.getPedidos()
                         .toArray(new LineaPedido[0]));
         this.listadoPedidos.repaint();
-        //this.textIntroducirPedido.selectAll();
-        this.textIntroducirPedido.setText("");
+        this.textIntroducirPedido.selectAll();
     }
 
     /**
