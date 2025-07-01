@@ -538,6 +538,11 @@ public class Interfaz extends javax.swing.JFrame {
         LineaPedido nuevaLinea = new LineaPedido();
         // Comprobamos que contenga texto.
         if (texto.length() > 0) {
+            /* Comprobamos que el texto no sean solo numeros. Si es asi
+               salimos del metodo sin añadir la linea.
+            */
+            boolean todoNumeros = comprobarTodoNumeros(texto);
+            if(todoNumeros) return;
             texto = comprobarCantidad(texto);
             nuevaLinea.setTextoPedido(texto.toUpperCase());
             /* Dependiendo de la seleccion del comboBox creamos un articulo de
@@ -565,6 +570,24 @@ public class Interfaz extends javax.swing.JFrame {
             actualizarDatos();
             actualizarTextoTotales(comprobarCantidadArticulos());
         }
+    }
+    
+    /**
+     * Comprobamos que el texto introducido por el usuario no contenga solamente
+     * números. Esto causaría un error al intentar cargar los datos.
+     * @param texto el texto introducido por el usuario.
+     * @return un boolean que contiene 'true' en caso de que el texto 
+     * contenga solo numeros.
+     */
+    private boolean comprobarTodoNumeros(String texto){
+        boolean todoNumeros = true;
+        for (int i = 0; i < texto.length(); i++){
+            if(texto.charAt(i) < '0' || texto.charAt(i) > '9'){
+                todoNumeros = false;
+                break;
+            }
+        }
+        return todoNumeros;
     }
 
     /**
