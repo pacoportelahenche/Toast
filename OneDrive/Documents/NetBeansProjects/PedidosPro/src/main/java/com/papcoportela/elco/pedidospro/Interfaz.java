@@ -138,6 +138,12 @@ public class Interfaz extends javax.swing.JFrame {
         this.verPedidosDeTipo(LineaPedido.TIPO_ALIMENTACION);
     }
     
+    /**
+     * Este metodo comprueba la cantidad de articulos de cada tipo,
+     * alimentacion y drogueria.
+     * @return Una matriz de dos Strings que almacenan la cantidad de cada
+     * tipo de pedido.
+     */
     private String[] comprobarCantidadArticulos(){
         String[] cantidadPorTipo = new String[2];
         int alimentacion = 0;
@@ -157,6 +163,12 @@ public class Interfaz extends javax.swing.JFrame {
         return cantidadPorTipo;
     }
     
+    /**
+     * Este metodo actualiza el texto que informa de la cantidad de pedidos
+     * de cada tipo.
+     * @param cantidades Una matriz de dos Strings que contiene la cantidad
+     * de cada tipo de pedido.
+     */
     private void actualizarTextoTotales(String[] cantidades){
         String texto = "Total lineas: " + 
                 this.listadoPedidos.getModel().getSize() + "; Alimentación: "
