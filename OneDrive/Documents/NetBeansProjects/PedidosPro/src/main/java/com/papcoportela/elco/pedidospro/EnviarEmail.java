@@ -1,6 +1,7 @@
 
 package com.papcoportela.elco.pedidospro;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
@@ -9,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,12 +25,26 @@ public class EnviarEmail extends javax.swing.JFrame {
     /**
      * Constructor.
      * @param pedidos el listado de pedidos.
+     * @param interfaz el objeto Interfaz de la aplicacion.
      */
-    public EnviarEmail(List pedidos) {
+    public EnviarEmail(List pedidos, Interfaz interfaz) {
         initComponents();
         this.pedidos = pedidos;
-        this.setLocationRelativeTo(null);
+        this.ponerIcono();
+        this.setLocationRelativeTo(interfaz);
+        this.setAlwaysOnTop(true);
         this.getRootPane().setDefaultButton(botonAceptar);
+    }
+    
+    /**
+     * Cambiamos el icono de la ventana.
+     */
+    private void ponerIcono() {
+        URL url = this.getClass().getResource("/recursos/elco.png");
+        if (url != null) {
+            ImageIcon imagen = new ImageIcon(url);
+            this.setIconImage(imagen.getImage());
+        }
     }
 
     /**
