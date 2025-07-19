@@ -1,8 +1,7 @@
 package com.papcoportela.elco.pedidospro;
 
-import java.awt.Color;
+import com.pacoportela.elco.toast.Toast;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,7 +18,8 @@ import javax.xml.bind.Unmarshaller;
 /**
  *
  * @author Paco Portela Henche
- * @date 18 mar 2023 Esta clase crea la interfaz que va a utilizar el usuario.
+ * @date 18 mar 2023 
+ * Esta clase crea la interfaz que va a utilizar el usuario.
  */
 public class Interfaz extends javax.swing.JFrame {
 
@@ -92,7 +92,8 @@ public class Interfaz extends javax.swing.JFrame {
      */
     public int salir() {
         this.guardarDatos();
-        System.exit(0);
+        new Toast("Datos guardados", true);
+        //System.exit(0);
         return 0;
     }
 
