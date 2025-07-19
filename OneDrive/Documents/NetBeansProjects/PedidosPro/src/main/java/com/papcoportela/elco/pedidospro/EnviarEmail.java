@@ -1,6 +1,7 @@
 
 package com.papcoportela.elco.pedidospro;
 
+import com.pacoportela.elco.toast.Toast;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
@@ -178,6 +179,7 @@ public class EnviarEmail extends javax.swing.JFrame {
         // enviamos el correo a la direccion indicada.
         //enviarCorreo(datosPedidoHtml, direccion);
         enviarCorreo(mensajeYPedido, direccion);
+        new Toast("Correo enviado", false);
         // cerramos la ventana y devolvemos los recursos al sistema.
         this.dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
@@ -251,7 +253,7 @@ public class EnviarEmail extends javax.swing.JFrame {
             t.sendMessage(mensaje, mensaje.getAllRecipients());
             // Cerramos el transporte
             t.close();
-            JOptionPane.showMessageDialog(null, "Correo enviado");
+            //JOptionPane.showMessageDialog(null, "Correo enviado");
             // Cerramos la ventana y devolvemos sus recursos al sistema.
             this.setVisible(false);
             this.dispose();
