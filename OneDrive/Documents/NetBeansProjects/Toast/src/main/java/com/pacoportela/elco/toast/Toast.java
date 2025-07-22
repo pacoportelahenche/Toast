@@ -64,8 +64,8 @@ public class Toast {
                 tf.setEditable(false);
                 Font fuente = new Font("Arial", Font.BOLD, 16);
                 tf.setFont(fuente);
-                tf.setForeground(Color.RED);
-                tf.setBackground(Color.YELLOW);
+                tf.setForeground(Color.YELLOW);
+                tf.setBackground(Color.BLUE);
                 FontMetrics fm = tf.getFontMetrics(tf.getFont());
                 int anchoTexto = fm.stringWidth(tf.getText());
                 tf.setPreferredSize
